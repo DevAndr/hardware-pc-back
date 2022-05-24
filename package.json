@@ -1,0 +1,29 @@
+{
+  "name": "server-hw-anal",
+  "version": "1.0.0",
+  "description": "backand",
+  "main": "index.js",
+  "engines": {
+    "node": "14.x"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DevAndr/hardware-pc-analyze.git"
+  },
+  "author": "Ilay",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DevAndr/hardware-pc-analyze/issues"
+  },
+  "homepage": "https://github.com/DevAndr/hardware-pc-analyze#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.11",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "puppeteer": "^14.1.1"
+  }
+}
