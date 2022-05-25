@@ -11,7 +11,8 @@ app.use('/api', routerParser)
 
 app.get('/test', async (req, res) => {
     const data = await ParsingService.parseSite();
-    res.json({data})
+
+    res.json({data, path: __dirname})
 })
 
 const port = process.env.PORT || 3030

@@ -11,7 +11,8 @@ const parseSite = async () => {
         const url = `${baseUrl}/?search=3060+3080&mode=match`;
 
         const browser = await puppeteer.launch({
-            headless: true
+            headless: true,
+            // executablePath: './'
         });
         const page = await browser.newPage();
         await page.goto(url, { waitUntil: 'networkidle0' });
