@@ -1,8 +1,30 @@
 const puppeteer = require('puppeteer-core');
 const chromium = require('chrome-aws-lambda');
+const AWS = require('aws-sdk');
 const cheerio = require('cheerio');
 const Store = require('../models/Store')
 const Card = require('../models/Сard')
+
+async function getBrowserInstance() {
+    const executablePath = await chromium.executablePath
+
+    if (!executablePath) {
+        // running locally
+        const puppeteer = require('puppeteer')
+        return puppeteer.launch({
+            args: chromium.args,
+            headless: true,
+            ignoreHTTPSErrors: true
+        })
+    }
+
+    return chromium.puppeteer.launch({
+        args: chromium.args,
+        executablePath,
+        headless: chromium.headless,
+        ignoreHTTPSErrors: true
+    })
+}
 
 const parseSite = async () => {
     const data = [];
@@ -11,13 +33,7 @@ const parseSite = async () => {
         const baseUrl = 'https://hardprice.ru';
         const url = `${baseUrl}/?search=3060+3080&mode=match`;
 
-        const browser = await puppeteer.launch({
-            args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
-            defaultViewport: chromium.defaultViewport,
-            executablePath: await chromium.executablePath || '/usr/bin/chromium-browser',
-            headless: true,
-            ignoreHTTPSErrors: true,
-        });
+        const browser = await getBrowserInstance();
         const page = await browser.newPage();
         await page.goto(url, { waitUntil: 'networkidle0' });
         const content = await page.content();
