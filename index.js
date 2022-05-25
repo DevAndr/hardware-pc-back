@@ -8,7 +8,7 @@ app.use(express.json())
 
 app.get('api/', routerParser)
 app.get('api/test', (req, res) => {
-    res.json("ok")
+    res.json({data: "ok"})
 })
 
 const port = process.env.PORT || 3030
