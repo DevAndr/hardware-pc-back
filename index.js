@@ -6,8 +6,8 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-app.get('/', routerParser)
-app.get('/test', (req, res) => {
+app.get('api/', routerParser)
+app.get('api/test', (req, res) => {
     res.json("ok")
 })
 
