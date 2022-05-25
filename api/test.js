@@ -1,9 +1,4 @@
-// const puppeteer = require('puppeteer-core');
-const chromium = require('chrome-aws-lambda');
-// const AWS = require('aws-sdk');
-const cheerio = require('cheerio');
-const Store = require('../models/Store')
-const Card = require('../models/Сard')
+const chromium = require("chrome-aws-lambda")
 
 async function getBrowserInstance() {
     const executablePath = await chromium.executablePath
@@ -26,7 +21,7 @@ async function getBrowserInstance() {
     })
 }
 
-const parseSite = async () => {
+module.exports = async (req, res) => {
     const data = [];
 
     try {
@@ -67,9 +62,5 @@ const parseSite = async () => {
         data.push(e.toString())
     }
 
-    return data;
-}
-
-module.exports = {
-    parseSite
+    res.json(data);
 }
