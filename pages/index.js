@@ -1,34 +1,46 @@
-import useSwr from 'swr'
-import Link from 'next/link'
-import axios from "axios";
+import Head from 'next/head'
+import { useState } from 'react'
+import styles from '../styles/Home.module.css'
+import Image from 'next/image'
 
-const fetcher = (url) => fetch(url).then((res) => res.json())
-const fetchData = async(url) => {
-  const res = await axios(url);
-  return res.data;
-  // setData(res.data)
-  // console.log(res.data)
-}
+export default function Home() {
+	const [websiteURL, setWebsiteURL] = useState('')
 
-export default function Index() {
-  const { data, error } = useSwr('/api/users', fetcher)
-  const { hw, errorHw } = useSwr('/api/test', fetchData)
+	const [imageURL, setImageURL] = useState('/')
 
-  if (error) return <div>Failed to load users</div>
-  if (!data) return <div>Loading...</div>
+	async function submitWebsiteURL() {
+		const res = await fetch('/api/get-screenshot-image', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				url: websiteURL
+			})
+		}).then((res) => res.json())
 
-  return (
-    <ul>
-      {data.map((user) => (
-        <li key={user.id}>
-          <Link href="/user/[id]" as={`/user/${user.id}`}>
-            <a>{`User ${user.id}`}</a>
-          </Link>
-        </li>
-      ))}
-      {
-        JSON.stringify(hw)
-      }
-    </ul>
-  )
+		setImageURL(res.data)
+		console.log(res)
+	}
+
+	return (
+		<div className={styles.container}>
+			<Head>
+				<title>Create Next App</title>
+				<link rel="icon" href="/favicon.ico" />
+			</Head>
+
+			<Image key={imageURL} src={imageURL} width={1280} height={720} />
+
+			<div className={styles.inputArea}>
+				<input
+					type="text"
+					value={websiteURL}
+					onChange={(e) => setWebsiteURL(e.target.value)}
+					placeholder="Enter a website URL"
+				/>
+				<button onClick={submitWebsiteURL}>Submit URL</button>
+			</div>
+		</div>
+	)
 }
