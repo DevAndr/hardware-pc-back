@@ -1,5 +1,4 @@
 const ParsingService = require("./services/ParsingService");
-const dirTree = require("directory-tree");
 const express = require('express')
 const cors = require('cors')
 const routerParser = require('./routes/buildDataParser')
@@ -12,8 +11,7 @@ app.use('/api', routerParser)
 
 app.get('/test', async (req, res) => {
     const data = await ParsingService.parseSite();
-    const tree = dirTree(__dirname);
-    res.json({data, path: __dirname, tree})
+    res.json({data, path: __dirname})
 })
 
 const port = process.env.PORT || 3030
