@@ -14,10 +14,12 @@ const parseSite = async () => {
         const browser = await puppeteer.launch(process.env.AWS_EXECUTION_ENV ? {
             args: chrome.args,
             executablePath: await chrome.executablePath,
-            headless: chrome.headless
+            headless: chrome.headless,
+            ignoreDefaultArgs: ['--disable-extensions']
         } : {
             args: [],
-            executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+            executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+            ignoreDefaultArgs: ['--disable-extensions']
         });
         const page = await browser.newPage();
         await page.goto(url, { waitUntil: 'networkidle0' });
