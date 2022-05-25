@@ -12,6 +12,7 @@ const parseSite = async () => {
 
         const browser = await puppeteer.launch({
             headless: true,
+            args: ['--no-sandbox']
             // executablePath: './'
         });
         const page = await browser.newPage();
