@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer');
+const chromium = require('chrome-aws-lambda');
 const cheerio = require('cheerio');
 const Store = require('../models/Store')
 const Card = require('../models/Сard')
@@ -12,8 +13,12 @@ const parseSite = async () => {
 
         const browser = await puppeteer.launch({
             headless: true,
-            args: ['--no-sandbox']
-            // executablePath: './'
+            // args: ['--no-sandbox'],
+            args: chromium.args,
+            defaultViewport: chromium.defaultViewport,
+            executablePath: await chromium.executablePath,
+            // headless: chromium.headless,
+            ignoreHTTPSErrors: true
         });
         const page = await browser.newPage();
         await page.goto(url, { waitUntil: 'networkidle0' });
