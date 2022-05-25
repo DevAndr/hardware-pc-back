@@ -1,13 +1,11 @@
-const puppeteer = require('puppeteer');
-const cheerio = require('cheerio');
+const ParsingService = require("../services/ParsingService")
+const Card = require('../models/Сard')
 
-const test = async (req, res) => {
-    res.json({
-        title: "Express Testing",
-        message: "The app is working properly!",
-    });
+const parsingData = async (req, res) => {
+    const data = await ParsingService.parseSite();
+    res.json(data);
 }
 
 module.exports = {
-    test
+    parsingData
 }

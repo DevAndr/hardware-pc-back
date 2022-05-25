@@ -1,9 +1,9 @@
 const Router = require("express").Router;
-const {test} = require("../controllers/parserController");
+const {parsingData} = require("../controllers/parserController");
 
 const routerParser = new Router();
 const ROUTE_NAME = "parser";
 
-routerParser.get(`/${ROUTE_NAME}`, test)
+routerParser.get(`/${ROUTE_NAME}`, parsingData)
 
 module.exports = routerParser
