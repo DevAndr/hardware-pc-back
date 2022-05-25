@@ -1,21 +1,19 @@
 import Head from 'next/head'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styles from '../styles/Home.module.css'
-import Image from 'next/image'
+import axios from "axios";
 
 export default function Home() {
 	const [data, setData] = useState([])
 
-	async function submitWebsiteURL() {
-		const res = await fetch('/api/test', {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		}).then((res) => res.json())
+	useEffect(() => {
+		fetchData();
+	}, [])
 
+	async function fetchData() {
+		const res = await axios('/api/test');
 		setData(res.data)
-		console.log(res)
+		console.log(res.data)
 	}
 
 	return (
@@ -25,9 +23,11 @@ export default function Home() {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
+			<div>Hello</div>
+
 			<div className={styles.inputArea}>
 				{
-					data.toString()
+					JSON.stringify(data)
 				}
 			</div>
 		</div>

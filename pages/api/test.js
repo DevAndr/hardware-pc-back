@@ -1,11 +1,14 @@
 import chromium from 'chrome-aws-lambda'
+const cheerio = require('cheerio');
+import Store from '../../models/Store'
+import Card from '../../models/Сard'
 
 async function getBrowserInstance() {
     const executablePath = await chromium.executablePath
 
     if (!executablePath) {
         // running locally
-        const puppeteer = require('puppeteer-core')
+        const puppeteer = require('puppeteer')
         return puppeteer.launch({
             args: chromium.args,
             headless: true,

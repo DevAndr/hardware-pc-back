@@ -2,7 +2,7 @@
   "name": "server-hw-anal",
   "version": "1.0.0",
   "description": "backand",
-  "main": "index.js",
+  "main": "pages/index.js",
   "engines": {
     "node": "16.x"
   },
@@ -22,12 +22,15 @@
   },
   "homepage": "https://github.com/DevAndr/hardware-pc-analyze#readme",
   "dependencies": {
+    "axios": "^0.27.2",
     "cheerio": "^1.0.0-rc.11",
     "chrome-aws-lambda": "^7.0.0",
     "cors": "^2.8.5",
     "express": "^4.18.1",
     "next": "^12.1.6",
     "nodemon": "^2.0.16",
-    "puppeteer-core": "^7.1.0"
+    "puppeteer": "^14.1.1",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
   }
 }
