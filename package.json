@@ -7,9 +7,9 @@
     "node": "16.x"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
     "chrome-aws-lambda": "^7.0.0",
     "cors": "^2.8.5",
     "express": "^4.18.1",
+    "next": "^12.1.6",
     "nodemon": "^2.0.16",
     "puppeteer-core": "^7.1.0"
   }

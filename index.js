@@ -1,20 +1,35 @@
-const ParsingService = require("./services/ParsingService");
-const express = require('express')
-const cors = require('cors')
-const routerParser = require('./routes/buildDataParser')
-const app = express()
+import Head from 'next/head'
+import { useState } from 'react'
+import styles from '../styles/Home.module.css'
+import Image from 'next/image'
 
-app.use(cors())
-app.use(express.json())
+export default function Home() {
+	const [data, setData] = useState([])
 
-app.use('/api', routerParser)
+	async function submitWebsiteURL() {
+		const res = await fetch('/api/test', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).then((res) => res.json())
 
-app.get('/test', async (req, res) => {
-    const data = await ParsingService.parseSite();
-    res.json({data, path: __dirname})
-})
+		setData(res.data)
+		console.log(res)
+	}
 
-const port = process.env.PORT || 3030
-app.listen(port, () => {
-    console.log('server started')
-})
+	return (
+		<div className={styles.container}>
+			<Head>
+				<title>Create Next App</title>
+				<link rel="icon" href="/favicon.ico" />
+			</Head>
+
+			<div className={styles.inputArea}>
+				{
+					data.toString()
+				}
+			</div>
+		</div>
+	)
+}
