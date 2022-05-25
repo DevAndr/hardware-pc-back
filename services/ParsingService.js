@@ -12,13 +12,11 @@ const parseSite = async () => {
         const url = `${baseUrl}/?search=3060+3080&mode=match`;
 
         const browser = await puppeteer.launch({
-            headless: true,
-            // args: ['--no-sandbox'],
-            args: chromium.args,
+            args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
             defaultViewport: chromium.defaultViewport,
             executablePath: await chromium.executablePath,
-            // headless: chromium.headless,
-            ignoreHTTPSErrors: true
+            headless: true,
+            ignoreHTTPSErrors: true,
         });
         const page = await browser.newPage();
         await page.goto(url, { waitUntil: 'networkidle0' });
