@@ -3,8 +3,8 @@ import Link from 'next/link'
 import axios from "axios";
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
-const fetchData = async() => {
-  const res = await axios('/api/test');
+const fetchData = async(url) => {
+  const res = await axios(url);
   return res.data;
   // setData(res.data)
   // console.log(res.data)
@@ -12,7 +12,7 @@ const fetchData = async() => {
 
 export default function Index() {
   const { data, error } = useSwr('/api/users', fetcher)
-  const { hw, errorHw } = useSwr('/api/users', fetchData)
+  const { hw, errorHw } = useSwr('/api/test', fetchData)
 
   if (error) return <div>Failed to load users</div>
   if (!data) return <div>Loading...</div>
