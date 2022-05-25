@@ -43,6 +43,7 @@ const parseSite = async () => {
         await browser.close();
     } catch (e) {
         console.log(e);
+        data.push(e.toString())
     }
 
     return data;
