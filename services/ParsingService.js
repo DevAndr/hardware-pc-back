@@ -1,6 +1,6 @@
-const puppeteer = require('puppeteer-core');
+// const puppeteer = require('puppeteer-core');
 const chromium = require('chrome-aws-lambda');
-const AWS = require('aws-sdk');
+// const AWS = require('aws-sdk');
 const cheerio = require('cheerio');
 const Store = require('../models/Store')
 const Card = require('../models/Сard')
