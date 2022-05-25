@@ -1,5 +1,5 @@
-const puppeteer = require('puppeteer');
-const chromium = require('chrome-aws-lambda');
+const puppeteer = require('puppeteer-core');
+const chrome = require('chrome-aws-lambda');
 const cheerio = require('cheerio');
 const Store = require('../models/Store')
 const Card = require('../models/Сard')
@@ -11,12 +11,13 @@ const parseSite = async () => {
         const baseUrl = 'https://hardprice.ru';
         const url = `${baseUrl}/?search=3060+3080&mode=match`;
 
-        const browser = await puppeteer.launch({
-            args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
-            defaultViewport: chromium.defaultViewport,
-            executablePath: await chromium.executablePath,
-            headless: true,
-            ignoreHTTPSErrors: true,
+        const browser = await puppeteer.launch(process.env.AWS_EXECUTION_ENV ? {
+            args: chrome.args,
+            executablePath: await chrome.executablePath,
+            headless: chrome.headless
+        } : {
+            args: [],
+            executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
         });
         const page = await browser.newPage();
         await page.goto(url, { waitUntil: 'networkidle0' });
