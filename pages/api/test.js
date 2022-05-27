@@ -1,11 +1,33 @@
 const cheerio = require('cheerio');
 const Downloader = require('node-url-downloader-mod');
 const rimraf = require("rimraf");
+const axios = require('axios');
 import scrape from 'website-scraper';
 import Store from '../../models/Store'
 import Card from '../../models/Сard'
 
 const {Scraper, Root, DownloadContent, OpenLinks, CollectContent} = require('nodejs-web-scraper');
+
+async function fetchData(url){
+    console.log("Crawling data...")
+
+    // make http call to url
+    let response = await axios(url, {
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.5) Gecko/20091102 Firefox/3.5.5 (.NET CLR 3.5.30729)',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+            'Content-Type': 'text/html; charset=UTF-8'
+        }
+    }).catch((err) => console.log(err));
+
+    if(response?.status !== 200){
+        console.log("Error occurred while fetching data");
+        return;
+    }
+
+    return response;
+
+}
 
 export default async (req, res) => {
     const data = [];
@@ -13,8 +35,25 @@ export default async (req, res) => {
         console.log("removing save: done");
 
         try {
-            const baseUrl = 'https://jut.su/anime';
-            const url = `${baseUrl}/anime`;
+            const baseUrl = 'https://hardprice.ru';
+            const url = `${baseUrl}/?search=3060&mode=match`;
+
+            let resp = await fetchData(url);
+            if(!resp?.data){
+                console.log("Invalid data Obj");
+                return;
+            }
+            const html = resp.data;
+
+            const $ = cheerio.load(html);
+
+
+            const products = $('.products-list');
+            console.log(products)
+            products.children().map(function(i, item) {
+                console.log($(item).find('div.products-list-v2__item-head').text())
+            });
+
 
             // const download = new Downloader();
             // download.get(url, './cache', 'index.html');
